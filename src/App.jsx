@@ -62,7 +62,7 @@ const App = () => {
     <div className="p-4 flex flex-col gap-5 my-5">
       <h1 className="text-4xl font-semibold text-center">PokeDex Explorer</h1>
 
-      <div className='flex justify-between items-center max-w-[500px] mx-auto w-full'>
+      <div className='flex sm:flex-row flex-col justify-between items-center sm:max-w-[500px] mx-auto w-full px-5 gap-2'>
         <SearchBar setSearchQuery={setSearchQuery} />
         <FilterBox filterByType={filterByType} />
       </div>
@@ -74,10 +74,7 @@ const App = () => {
         {displayedData.map(pokemon => (
           <PokemonCards
             key={pokemon.name}
-            img={
-              pokemon.sprites.other.dream_world.front_default ||
-              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRd8LWlb8l34MXvr3BonwEYsd11lw1QKQVEiQ&s'
-            }
+            img={pokemon.sprites?.other?.dream_world.front_default || pokemon.sprites?.front_default}
             name={pokemon.name}
             id={pokemon.id}
             types={pokemon.types.map(t => t.type.name)}

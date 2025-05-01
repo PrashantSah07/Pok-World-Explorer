@@ -8,8 +8,8 @@ const FilterBox = ({ filterByType }) => {
     }
 
     return (
-        <div className="my-4">
-            <select className="border px-5 py-2 rounded font-semibold" onChange={handleChange}>
+        <div className="w-full">
+            <select className="border px-5 py-2 rounded font-semibold w-full" onChange={handleChange}>
                 {types.map((type, index) => (
                     <option key={index} className="font-semibold" value={type}>
                         {type}
