@@ -5,6 +5,10 @@
     font-family: "Titillium Web", sans-serif;
 }
 
+body {
+    background-color: #020617;
+}
+
 button {
     cursor: pointer;
 }

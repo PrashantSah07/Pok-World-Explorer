@@ -1,9 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { FavoritesContext } from '../context/FavoritesContext '
+import { motion } from 'framer-motion'
 
 const DetailedCardView = ({ pokemonData, evolutionChain, error }) => {
+
+    const { addFavorite, removeFavorite, isFavorite } = useContext(FavoritesContext);
+
     return (
-        <div className="max-w-4xl mx-auto p-6 space-y-8 bg-white rounded-xl shadow-md mt-10 mb-10">
-            <h1 className="text-5xl font-bold capitalize text-center text-gray-800">{pokemonData.name}</h1>
+        <motion.div className="max-w-4xl mx-auto p-6 space-y-8 bg-[#1f2937] rounded-xl shadow-md mt-10 mb-10" initial={{ x: 40, opacity: 0 }} whileInView={{ x: 0, opacity: 1 }} transition={{ duration: 0.5, ease: "easeOut" }} viewport={{ once: true }}>
+            <h1 className="text-5xl font-bold capitalize text-center bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">{pokemonData.name}</h1>
 
             <div className="flex justify-center">
                 <img
@@ -14,7 +19,7 @@ const DetailedCardView = ({ pokemonData, evolutionChain, error }) => {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div className="bg-gray-100 p-4 rounded-lg shadow">
+                <div className="bg-[#2d3949] p-4 rounded-lg shadow text-white">
                     <h2 className="text-2xl font-semibold mb-3">Stats</h2>
                     <ul className="space-y-2">
                         {pokemonData.stats?.map(stat => (
@@ -26,13 +31,13 @@ const DetailedCardView = ({ pokemonData, evolutionChain, error }) => {
                     </ul>
                 </div>
 
-                <div className="bg-gray-100 p-4 rounded-lg shadow">
+                <div className="bg-[#2d3949] p-4 rounded-lg shadow text-white">
                     <h2 className="text-2xl font-semibold mb-3">Abilities</h2>
                     <div className="flex flex-wrap gap-2">
                         {pokemonData.abilities?.map(ability => (
                             <span
                                 key={ability.ability.name}
-                                className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium"
+                                className="bg-green-300 text-green-800 px-3 py-1 rounded-full text-sm font-medium"
                             >
                                 {ability.ability.name}
                             </span>
@@ -41,13 +46,13 @@ const DetailedCardView = ({ pokemonData, evolutionChain, error }) => {
                 </div>
             </div>
 
-            <div className="bg-gray-100 p-4 rounded-lg shadow">
+            <div className="bg-[#2d3949] p-4 rounded-lg shadow text-white">
                 <h2 className="text-2xl font-semibold mb-3">Types</h2>
                 <div className="flex flex-wrap gap-2">
                     {pokemonData.types?.map(type => (
                         <span
                             key={type.type.name}
-                            className="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium"
+                            className="bg-purple-300 text-purple-800 px-3 py-1 rounded-full text-sm font-medium"
                         >
                             {type.type.name}
                         </span>
@@ -55,13 +60,13 @@ const DetailedCardView = ({ pokemonData, evolutionChain, error }) => {
                 </div>
             </div>
 
-            <div className="bg-gray-100 p-4 rounded-lg shadow">
+            <div className="bg-[#2d3949] p-4 rounded-lg shadow text-white">
                 <h2 className="text-2xl font-semibold mb-3">Moves (first 20)</h2>
                 <div className="flex flex-wrap gap-2 max-h-40 overflow-y-auto">
                     {pokemonData.moves?.slice(0, 20).map(move => (
                         <span
                             key={move.move.name}
-                            className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium"
+                            className="bg-blue-300 text-blue-800 px-3 py-1 rounded-full text-sm font-medium"
                         >
                             {move.move.name}
                         </span>
@@ -69,21 +74,25 @@ const DetailedCardView = ({ pokemonData, evolutionChain, error }) => {
                 </div>
             </div>
 
-            <div className="bg-gray-100 p-4 rounded-lg shadow">
+            <div className="bg-[#2d3949] p-4 rounded-lg shadow text-white">
                 <h2 className="text-2xl font-semibold mb-3">Evolution Chain</h2>
                 {error ? (
                     <p className="text-red-500">{error}</p>
                 ) : (
-                    <p className="text-lg capitalize text-gray-700">{evolutionChain.join(' → ')}</p>
+                    <p className="text-lg capitalize text-gray-400">{evolutionChain.join(' → ')}</p>
                 )}
             </div>
 
             <div className="flex justify-center">
-                <button className="mt-4 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-6 rounded-lg shadow-md">
-                    Add to Favorites
-                </button>
+                {isFavorite(pokemonData) ? (
+                    <button className="mt-4 bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-6 rounded-lg shadow-md"
+                        onClick={() => removeFavorite(pokemonData)}>Remove from Favorites</button>) : (
+                    <button className="mt-4 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-6 rounded-lg shadow-md"
+                        onClick={() => addFavorite(pokemonData)}>Add to Favorites</button>
+                )}
             </div>
-        </div>
+
+        </motion.div>
     )
 }
 

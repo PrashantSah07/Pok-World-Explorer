@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import Navbar from '../components/Navbar';
 import useFetch from '../Hooks/useFetch';
 import DetailedCardView from '../components/DetailedCardView'
 
@@ -35,17 +36,38 @@ const DetailView = () => {
         fetchEvolution();
     }, [id]);
 
-    if (loading) return <p className="text-center mt-10 text-lg">Loading...</p>;
-    if (!pokemonData) return <p className="text-center text-red-500 mt-10">Error loading data</p>;
-    if (pokemonData.length === 0) return <p className='text-center mt-20 font-bold text-4xl' >Not Available</p>
+    if (loading) {
+        return <>
+            <Navbar />
+            <p className="text-center mt-10 text-lg text-white">Loading...</p>
+        </>
+    }
+    if (!pokemonData) {
+        return <>
+            <Navbar />
+            <p className="text-center text-red-500 mt-10">Error loading data</p>
+        </>
+    }
+    if (pokemonData.length === 0) {
+        return <>
+            <Navbar />
+            <p className='text-center mt-20 font-bold text-4xl text-red-500' >Not Available</p>
+        </>
+    }
 
     return (
-
-        <DetailedCardView
-            pokemonData={pokemonData}
-            evolutionChain={evolutionChain}
-            error={error}
-        />
+        <>
+            <Navbar />
+            <Link to='/'>
+                <div className='max-w-[2000px] mx-auto my-5'>
+                    <button className='bg-blue-500 px-5 py-1 text-white rounded ml-20'>Back</button>
+                </div>
+            </Link>
+            <DetailedCardView
+                pokemonData={pokemonData}
+                evolutionChain={evolutionChain}
+                error={error}
+            /></>
     );
 };
 

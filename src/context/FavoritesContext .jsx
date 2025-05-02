@@ -8,16 +8,22 @@ export const FavoritesProvider = ({ children }) => {
         return storedFavorites ? JSON.parse(storedFavorites) : [];
     });
 
+    const [count, setCount] = useState(favorites.length);
+
     useEffect(() => {
         localStorage.setItem('favorites', JSON.stringify(favorites));
+        setCount(favorites.length);
     }, [favorites]);
+
 
     const addFavorite = (pokemon) => {
         setFavorites((prev) => [...prev, pokemon]);
+        alert('added to favorites')
     };
 
     const removeFavorite = (pokemon) => {
         setFavorites((prev) => prev.filter((p) => p.id !== pokemon.id));
+        alert('removed from favorites')
     };
 
     const isFavorite = (pokemon) => {
@@ -25,7 +31,7 @@ export const FavoritesProvider = ({ children }) => {
     };
 
     return (
-        <FavoritesContext.Provider value={{ favorites, addFavorite, removeFavorite, isFavorite }}>
+        <FavoritesContext.Provider value={{ favorites, addFavorite, removeFavorite, isFavorite, count }}>
             {children}
         </FavoritesContext.Provider>
     );

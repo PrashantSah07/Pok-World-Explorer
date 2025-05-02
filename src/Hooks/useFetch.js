@@ -16,7 +16,6 @@ function useFetch(url) {
             }
             catch (error) {
                 setError(error);
-                console.log(error);
             }
             finally {
                 setLoading(false);
