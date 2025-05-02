@@ -7,7 +7,6 @@ import { motion } from 'framer-motion'
 
 const FavoritePokemon = () => {
     const { favorites } = useContext(FavoritesContext);
-    console.log(favorites)
     return (
         <div>
             <Navbar />
